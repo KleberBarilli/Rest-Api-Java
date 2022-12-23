@@ -1,4 +1,4 @@
-package br.com.starter.modules.post.repository;
+package br.com.starter.modules.post.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
