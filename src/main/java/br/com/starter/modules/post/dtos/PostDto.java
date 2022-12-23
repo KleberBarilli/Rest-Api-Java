@@ -1,5 +1,8 @@
 package br.com.starter.modules.post.dtos;
 
+import lombok.Data;
+
+@Data
 public class PostDto {
 
     private long id;
