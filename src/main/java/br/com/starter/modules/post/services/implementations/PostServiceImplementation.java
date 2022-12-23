@@ -1,5 +1,7 @@
 package br.com.starter.modules.post.services.implementations;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,7 @@ public class PostServiceImplementation implements PostService {
         post.setTitle(postDto.getTitle());
         post.setDescription(postDto.getDescription());
         post.setContent(postDto.getContent());
+        post.setCreatedAt(new Date());
 
         Post newPost = postRepository.save(post);
 
