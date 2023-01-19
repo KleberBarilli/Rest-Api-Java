@@ -1,8 +1,8 @@
 package br.com.starter.modules.post.services.implementations;
 
 import java.util.Date;
+import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.starter.modules.post.dtos.PostDto;
@@ -15,27 +15,46 @@ public class PostServiceImplementation implements PostService {
 
     private PostRepository postRepository;
 
-    public PostServiceImplementation(PostRepository postRepository) {
-        this.postRepository = postRepository;
+    private PostDto mapToDto(Post post) {
+        PostDto postDto = new PostDto();
+        postDto.setId(post.getId());
+        postDto.setTitle(post.getTitle());
+        postDto.setDescription(post.getDescription());
+        postDto.setContent(post.getContent());
+
+        return postDto;
+
     }
 
-    @Override
-    public PostDto createPost(PostDto postDto) {
+    private Post mapToEntity(PostDto postDto) {
         Post post = new Post();
         post.setTitle(postDto.getTitle());
         post.setDescription(postDto.getDescription());
         post.setContent(postDto.getContent());
         post.setCreatedAt(new Date());
 
+        return post;
+    }
+
+    public PostServiceImplementation(PostRepository postRepository) {
+        this.postRepository = postRepository;
+    }
+
+    @Override
+    public PostDto createPost(PostDto postDto) {
+
+        Post post = mapToEntity(postDto);
+
         Post newPost = postRepository.save(post);
 
-        PostDto postResponse = new PostDto();
-        postResponse.setId(newPost.getId());
-        postResponse.setTitle(newPost.getTitle());
-        postResponse.setDescription(newPost.getDescription());
-        postResponse.setContent(newPost.getContent());
+        PostDto postResponse = mapToDto(newPost);
 
         return postResponse;
+    }
+
+    @Override
+    public List<PostDto> getAllPosts() {
+        return postRepository.findAll();
     }
 
 }
