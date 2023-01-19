@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.starter.modules.post.dtos.PostDto;
 import br.com.starter.modules.post.entities.Post;
+import br.com.starter.modules.post.exceptions.ResourceNotFoundException;
 import br.com.starter.modules.post.repositories.PostRepository;
 import br.com.starter.modules.post.services.PostService;
 
@@ -59,6 +60,12 @@ public class PostServiceImplementation implements PostService {
         List<Post> posts = postRepository.findAll();
 
         return posts.stream().map(post -> mapToDto(post)).collect(Collectors.toList());
+    }
+
+    @Override
+    public PostDto getPostById(long id) {
+        Post post = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post", "id", id));
+        return mapToDto(post);
     }
 
 }
