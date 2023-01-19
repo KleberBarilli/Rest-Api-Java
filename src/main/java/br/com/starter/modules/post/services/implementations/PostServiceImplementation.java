@@ -2,6 +2,7 @@ package br.com.starter.modules.post.services.implementations;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -54,7 +55,10 @@ public class PostServiceImplementation implements PostService {
 
     @Override
     public List<PostDto> getAllPosts() {
-        return postRepository.findAll();
+
+        List<Post> posts = postRepository.findAll();
+
+        return posts.stream().map(post -> mapToDto(post)).collect(Collectors.toList());
     }
 
 }
