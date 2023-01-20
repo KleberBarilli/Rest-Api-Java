@@ -82,4 +82,9 @@ public class PostServiceImplementation implements PostService {
         return mapToDto(updatedPost);
     }
 
+    @Override
+    public void deletePostById(long id) {
+        postRepository.deleteById(id);
+    }
+
 }
