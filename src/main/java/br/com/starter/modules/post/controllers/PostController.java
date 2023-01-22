@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.starter.modules.post.dtos.PostDto;
 import br.com.starter.modules.post.dtos.PostResponse;
 import br.com.starter.modules.post.services.PostService;
+import br.com.starter.modules.post.utils.AppConstants;
 
 @RestController
 @RequestMapping("/api/posts")
@@ -33,10 +34,10 @@ public class PostController {
 
     @GetMapping
     public PostResponse getAllPosts(
-            @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize,
-            @RequestParam(value = "pageNumber", defaultValue = "0", required = false) int pageNumber,
-            @RequestParam(value = "sortBy", defaultValue = "id", required = false) String sortBy,
-            @RequestParam(value = "order", defaultValue = "desc", required = false) String order) {
+            @RequestParam(value = "pageSize", defaultValue = AppConstants.DEFAULT_PAGE_SIZE, required = false) int pageSize,
+            @RequestParam(value = "pageNumber", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER, required = false) int pageNumber,
+            @RequestParam(value = "sortBy", defaultValue = AppConstants.DEFAULT_SORT_BY, required = false) String sortBy,
+            @RequestParam(value = "order", defaultValue = AppConstants.DEFAULT_ORDER, required = false) String order) {
         return postService.getAllPosts(pageSize, pageNumber, sortBy, order);
     }
 
