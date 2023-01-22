@@ -1,7 +1,5 @@
 package br.com.starter.modules.post.controllers;
 
-import java.util.List;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.starter.modules.post.dtos.PostDto;
+import br.com.starter.modules.post.dtos.PostResponse;
 import br.com.starter.modules.post.services.PostService;
 
 @RestController
@@ -33,7 +32,7 @@ public class PostController {
     }
 
     @GetMapping
-    public List<PostDto> getAllPosts(
+    public PostResponse getAllPosts(
             @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize,
             @RequestParam(value = "pageNumber", defaultValue = "0", required = false) int pageNumber) {
         return postService.getAllPosts(pageSize, pageNumber);

@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.starter.modules.post.dtos.PostDto;
+import br.com.starter.modules.post.dtos.PostResponse;
 import br.com.starter.modules.post.entities.Post;
 import br.com.starter.modules.post.exceptions.ResourceNotFoundException;
 import br.com.starter.modules.post.repositories.PostRepository;
@@ -58,14 +59,24 @@ public class PostServiceImplementation implements PostService {
     }
 
     @Override
-    public List<PostDto> getAllPosts(int pageSize, int pageNumber) {
+    public PostResponse getAllPosts(int pageSize, int pageNumber) {
 
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
         Page<Post> posts = postRepository.findAll(pageable);
 
         List<Post> listOfPosts = posts.getContent();
 
-        return listOfPosts.stream().map(post -> mapToDto(post)).collect(Collectors.toList());
+        List<PostDto> data = listOfPosts.stream().map(post -> mapToDto(post)).collect(Collectors.toList());
+
+        PostResponse postResponse = new PostResponse();
+        postResponse.setData(data);
+        postResponse.setPageNumber(posts.getNumber());
+        postResponse.setPageSize(posts.getSize());
+        postResponse.setTotalElements(posts.getTotalElements());
+        postResponse.setTotalPages(posts.getTotalPages());
+        postResponse.setLast(posts.isLast());
+
+        return postResponse;
     }
 
     @Override

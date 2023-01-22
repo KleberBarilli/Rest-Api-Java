@@ -1,14 +1,13 @@
 package br.com.starter.modules.post.services;
 
-import java.util.List;
-
 import br.com.starter.modules.post.dtos.PostDto;
+import br.com.starter.modules.post.dtos.PostResponse;
 
 public interface PostService {
 
     PostDto createPost(PostDto postDto);
 
-    List<PostDto> getAllPosts(int pageSize, int pageNumber);
+    PostResponse getAllPosts(int pageSize, int pageNumber);
 
     PostDto getPostById(long id);
 
