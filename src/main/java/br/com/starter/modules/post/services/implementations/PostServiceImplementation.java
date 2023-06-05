@@ -1,9 +1,9 @@
 package br.com.starter.modules.post.services.implementations;
 
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -22,29 +22,25 @@ public class PostServiceImplementation implements PostService {
 
     private PostRepository postRepository;
 
+    private ModelMapper mapper;
+
     private PostDto mapToDto(Post post) {
-        PostDto postDto = new PostDto();
-        postDto.setId(post.getId());
-        postDto.setTitle(post.getTitle());
-        postDto.setDescription(post.getDescription());
-        postDto.setContent(post.getContent());
+        PostDto postDto = mapper.map(post, PostDto.class);
 
         return postDto;
 
     }
 
     private Post mapToEntity(PostDto postDto) {
-        Post post = new Post();
-        post.setTitle(postDto.getTitle());
-        post.setDescription(postDto.getDescription());
-        post.setContent(postDto.getContent());
-        post.setCreatedAt(new Date());
+        Post post = mapper.map(postDto, Post.class);
 
         return post;
+
     }
 
-    public PostServiceImplementation(PostRepository postRepository) {
+    public PostServiceImplementation(PostRepository postRepository, ModelMapper mapper) {
         this.postRepository = postRepository;
+        this.mapper = mapper;
     }
 
     @Override
