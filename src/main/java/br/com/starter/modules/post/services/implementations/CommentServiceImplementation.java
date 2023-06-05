@@ -1,5 +1,8 @@
 package br.com.starter.modules.post.services.implementations;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 
 import br.com.starter.modules.post.dtos.CommentDto;
@@ -57,6 +60,14 @@ public class CommentServiceImplementation implements CommentService {
         comment.setBody(commentDto.getBody());
 
         return comment;
+    }
+
+    @Override
+    public List<CommentDto> getCommentsByPostId(long postId) {
+
+        List<Comment> comments = commentRepository.findByPostId(postId);
+
+        return comments.stream().map(comment -> mapToDto(comment)).collect(Collectors.toList());
     }
 
 }
